@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Tompet.Core.Constants;
-using Tompet.Data;
+using Tompet.Infrastructure.Data;
 using Tompet.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);

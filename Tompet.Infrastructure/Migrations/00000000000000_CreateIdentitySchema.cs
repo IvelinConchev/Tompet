@@ -1,4 +1,4 @@
-﻿namespace Tompet.Data.Migrations
+﻿namespace Tompet.Infrastructure.Data.Migrations
 {
     using Microsoft.EntityFrameworkCore.Metadata;
     using Microsoft.EntityFrameworkCore.Migrations;

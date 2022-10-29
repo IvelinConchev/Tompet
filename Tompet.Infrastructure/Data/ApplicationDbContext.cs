@@ -1,4 +1,4 @@
-﻿namespace Tompet.Data
+﻿namespace Tompet.Infrastructure.Data
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
