@@ -5,7 +5,7 @@
     using Tompet.Core.Constants;
     using Tompet.Models;
 
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
