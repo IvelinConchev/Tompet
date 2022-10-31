@@ -9,5 +9,16 @@
             : base(options)
         {
         }
+
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    base.OnModelCreating(builder);
+        //}
+
+        public DbSet<Company> Companies { get; set; }
+
+        public DbSet<Service> Services { get; set; }   
+
+        public DbSet<Technique> Techniques { get; set; }
     }
 }
