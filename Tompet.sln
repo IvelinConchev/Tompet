@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tompet", "Tompet\Tompet.csproj", "{A38E040C-1825-4A88-8F0D-3FDAC5B9FC11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tompet", "Tompet\Tompet.csproj", "{A38E040C-1825-4A88-8F0D-3FDAC5B9FC11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tompet.Core", "Tompet.Core\Tompet.Core.csproj", "{D2741C32-B85D-44BB-978E-5D0F53CA6DA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tompet.Core", "Tompet.Core\Tompet.Core.csproj", "{D2741C32-B85D-44BB-978E-5D0F53CA6DA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tompet.Infrastructure", "Tompet.Infrastructure\Tompet.Infrastructure.csproj", "{8F667D53-8724-4F1E-A14D-C7005759EAE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tompet.Infrastructure", "Tompet.Infrastructure\Tompet.Infrastructure.csproj", "{8F667D53-8724-4F1E-A14D-C7005759EAE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tompet.Api", "Tompet.Api\Tompet.Api.csproj", "{78DA1725-0CE8-49D0-B76B-C9DDBC1FBFC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{8F667D53-8724-4F1E-A14D-C7005759EAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F667D53-8724-4F1E-A14D-C7005759EAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F667D53-8724-4F1E-A14D-C7005759EAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78DA1725-0CE8-49D0-B76B-C9DDBC1FBFC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78DA1725-0CE8-49D0-B76B-C9DDBC1FBFC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78DA1725-0CE8-49D0-B76B-C9DDBC1FBFC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78DA1725-0CE8-49D0-B76B-C9DDBC1FBFC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

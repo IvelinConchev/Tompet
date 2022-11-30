@@ -9,8 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddApplicationDbContexts(builder.Configuration);
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = true;
+    //options.Password.RequireDigit = false;
+    //options.Password.RequireLowercase = false;
+    //options.Password.RequireNonAlphanumeric = false;
+    //options.Password.RequireUppercase = false;
+})
+
+    .AddEntityFrameworkStores<TompetDbContext>();
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
     {
@@ -19,7 +27,7 @@ builder.Services.AddControllersWithViews()
         options.ModelBinderProviders.Insert(2, new DoubleModelBinderProvider());
     });
 
-builder.Services.AddApplicationServices();
+builder.Services.ApplicationServices();
 
 var app = builder.Build();
 
@@ -42,6 +50,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.PreparateDatabase();
 
 app.MapControllerRoute(
     name: "default",

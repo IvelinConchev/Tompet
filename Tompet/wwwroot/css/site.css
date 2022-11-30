@@ -21,3 +21,8 @@ body {
 div.content-wrapper {
     background-color: aqua;
 }
+
+.heading-margin {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}

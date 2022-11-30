@@ -11,7 +11,7 @@ using Tompet.Infrastructure.Data;
 
 namespace Tompet.Infrastructure.Data.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(TompetDbContext))]
     [Migration("20221031140502_ServicesAmdTecniqueAndComapnyAdded")]
     partial class ServicesAmdTecniqueAndComapnyAdded
     {
