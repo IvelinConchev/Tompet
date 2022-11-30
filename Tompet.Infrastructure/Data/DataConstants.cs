@@ -26,5 +26,11 @@
             public const int TechniqueNameMaxLength = 20;
             public const int TechniqueTypeMaxLength = 20;
         }
+
+        public class ApplicationUser
+        {
+            public const int ApplicationUserFirstNameMaxLength = 50;
+            public const int ApplicationUserLastNameMaxLength = 50;
+        }
     }
 }

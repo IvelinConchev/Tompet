@@ -2,8 +2,9 @@
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using Tompet.Infrastructure.Data.Identity;
 
-    public class TompetDbContext : IdentityDbContext
+    public class TompetDbContext : IdentityDbContext<ApplicationUser>
     {
         public TompetDbContext(DbContextOptions<TompetDbContext> options)
             : base(options)
