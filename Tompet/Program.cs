@@ -20,6 +20,14 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 })
 
     .AddEntityFrameworkStores<TompetDbContext>();
+
+builder.Services.AddAuthentication()
+.AddFacebook(options =>
+{
+    options.AppId = "1965715616950764";
+    options.AppSecret = "6ccd4446c6bb7399af1bc25311009665";
+}); 
+
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
     {
