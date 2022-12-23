@@ -1,7 +1,10 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
     using Microsoft.EntityFrameworkCore;
+    using Tompet.Core.Contracts;
+    using Tompet.Core.Services;
     using Tompet.Infrastructure.Data;
+    using Tompet.Infrastructure.Data.Repositories;
 
     public static class ServiceCollectionExtension
     {
@@ -17,7 +20,8 @@
 
         public static IServiceCollection ApplicationServices(this IServiceCollection services)
         {
-            //services.AddScoped<>();
+            services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>();
+            services.AddScoped<IUserService, UserService>();
         
            return services;
         }

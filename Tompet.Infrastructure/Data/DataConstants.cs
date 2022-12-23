@@ -32,5 +32,14 @@
             public const int ApplicationUserFirstNameMaxLength = 50;
             public const int ApplicationUserLastNameMaxLength = 50;
         }
+
+        public static class UserConstant
+        {
+            public static class Roles
+            {
+                public const string Administrator = "Administrator";
+                public const string Manager = "Administrator, Manager";
+            }
+        }
     }
 }

@@ -19,13 +19,14 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     //options.Password.RequireUppercase = false;
 })
 
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<TompetDbContext>();
 
 builder.Services.AddAuthentication()
 .AddFacebook(options =>
 {
-    options.AppId = "1965715616950764";
-    options.AppSecret = "6ccd4446c6bb7399af1bc25311009665";
+    options.AppId = builder.Configuration.GetValue<string>("Facebook:AppId");
+    options.AppSecret = builder.Configuration.GetValue<string>("Facebook:AppSecret");
 }); 
 
 builder.Services.AddControllersWithViews()
@@ -62,6 +63,9 @@ app.UseAuthorization();
 
 app.PreparateDatabase();
 
+app.MapControllerRoute(
+    name: "Area",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
