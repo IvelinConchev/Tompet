@@ -1,14 +1,11 @@
 ﻿namespace Tompet.Areas.Admin.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.EntityFrameworkCore;
     using Tompet.Core.Constants;
     using Tompet.Core.Contracts;
     using Tompet.Core.Models;
-    using Tompet.Infrastructure.Data;
     using Tompet.Infrastructure.Data.Identity;
 
     public class UserController : BaseController
@@ -39,23 +36,38 @@
 
         public async Task<IActionResult> Roles(string id)
         {
-           var user = await service.GetUserById(id);
+            var user = await service.GetUserById(id);
             var model = new UserRolesViewModel()
             {
                 UserId = user.Id,
                 Name = $"{user.FirstName} {user.LastName}",
             };
 
-            ViewBag.RoleItems =  roleManager.Roles
+            ViewBag.RoleItems = roleManager.Roles
                 .ToList()
-                 .Select(r => new SelectListItem() 
-                 { 
+                 .Select(r => new SelectListItem()
+                 {
                      Text = r.Name,
-                     Value = r.Id,
+                     Value = r.Name,
                      Selected = userManager.IsInRoleAsync(user, r.Name).Result
-                 });
+                 }).ToList();
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Roles(UserRolesViewModel model)
+        {
+            var user = await service.GetUserById(model.UserId);
+            var userRoles = await userManager.GetRolesAsync(user);
+            await userManager.RemoveFromRolesAsync(user, userRoles);
+
+            if (model.RoleNames?.Length > 0)
+            {
+                await userManager.AddToRolesAsync(user, model.RoleNames);
+            }
+
+            return RedirectToAction(nameof(ManageUsers));
         }
 
         [HttpPost]
@@ -74,7 +86,7 @@
             {
                 ViewData[MessageConstant.ErrorMessage] = "Възникна грешка!";
             }
-            
+
             return View(model);
         }
 
@@ -84,13 +96,15 @@
 
             return View(model);
         }
+
+
         public async Task<IActionResult> CreateRole()
         {
-            await roleManager.CreateAsync(new IdentityRole()
-            {
-                //Name = "Administrator"
-                Name = "User"
-            });
+            //await roleManager.CreateAsync(new IdentityRole()
+            //{
+            //    //Name = "Administrator"
+            //    Name = "User"
+            //});
 
             return Ok();
         }

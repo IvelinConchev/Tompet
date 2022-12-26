@@ -10,5 +10,16 @@
                 </p>
             </a>
         </li>
+        @if (User.IsInRole(Tompet.Infrastructure.Data.DataConstants.UserConstant.Roles.Administrator))
+        {
+            <li class="nav-item">
+            <a href="/" class="nav-link active">
+               <i class="fas fa-truck-moving"></i>
+                <p>
+                    My secret menu
+                </p>
+            </a>
+        </li>
+        }
     </ul>
 </nav>
