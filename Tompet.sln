@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tompet.Core", "Tompet.Core\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tompet.Infrastructure", "Tompet.Infrastructure\Tompet.Infrastructure.csproj", "{8F667D53-8724-4F1E-A14D-C7005759EAE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tompet.Api", "Tompet.Api\Tompet.Api.csproj", "{78DA1725-0CE8-49D0-B76B-C9DDBC1FBFC3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tompet.Api", "Tompet.Api\Tompet.Api.csproj", "{78DA1725-0CE8-49D0-B76B-C9DDBC1FBFC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tompet.Test", "Tompet.Test\Tompet.Test.csproj", "{B87B0CD1-DDAB-4565-88FE-212A2A2F35D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{78DA1725-0CE8-49D0-B76B-C9DDBC1FBFC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78DA1725-0CE8-49D0-B76B-C9DDBC1FBFC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78DA1725-0CE8-49D0-B76B-C9DDBC1FBFC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B87B0CD1-DDAB-4565-88FE-212A2A2F35D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B87B0CD1-DDAB-4565-88FE-212A2A2F35D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B87B0CD1-DDAB-4565-88FE-212A2A2F35D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B87B0CD1-DDAB-4565-88FE-212A2A2F35D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
