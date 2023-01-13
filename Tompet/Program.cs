@@ -37,6 +37,11 @@ builder.Services.AddControllersWithViews()
         options.ModelBinderProviders.Insert(2, new DoubleModelBinderProvider());
     });
 
+builder.Services.AddStackExchangeRedisCache(options => 
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Трябва да се попълне!");
+});
+
 builder.Services.ApplicationServices();
 
 var app = builder.Build();
