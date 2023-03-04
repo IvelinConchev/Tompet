@@ -18,6 +18,5 @@
         public string? Description { get; set; }
 
         public IList<Technique> Techniques { get; set; } = new List<Technique>();
-
     }
 }

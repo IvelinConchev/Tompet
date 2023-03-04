@@ -26,6 +26,10 @@
           <li class="nav-item">
               <a class="nav-link text-dark" asp-area="" asp-controller="Companies" asp-action="Add">Добавяне на Фирма</a>
           </li>
+          <a class="nav-link text-dark" asp-area="" asp-controller="Companies" asp-action="All">Добавяне на Фирма</a>
+          </li>
+          <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Add">Добавяне на услуга</a>
+          </li>
       </div>
     </ul>
 
@@ -67,6 +71,7 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+      <partial name="_CookieConsentPartial" />
     <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">

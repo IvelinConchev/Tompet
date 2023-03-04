@@ -12,10 +12,14 @@
         {
         }
 
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    base.OnModelCreating(builder);
-        //}
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            //builder.Entity<ApplicationFile>()
+            //    .Property(p => p.Content)
+            //    .HasMaxLength(1024);
+
+            base.OnModelCreating(builder);
+        }
 
         public DbSet<Company> Companies { get; set; }
 
@@ -24,6 +28,5 @@
         public DbSet<Technique> Techniques { get; set; }
 
         public DbSet<ApplicationFile> Files { get; set; }
-
     }
 }

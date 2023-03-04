@@ -1,0 +1,22 @@
+﻿@model AddServicesFormModel
+
+@{
+    ViewData["Title"] = "Добавяне на услуга";
+}
+
+<div  class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <h2 class="heading-margin text-center">Добавяне на услуга</h2>
+              <form method="post" enctype="multipart/form-data">
+         <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" placeholder="Почисване на ями, изграждане на причиствателни....">
+        <div class="form-group">
+                    <label asp-for="Description"></label>
+                    <textarea asp-for="Description" rows="4" class="form-control" placeholder="Описание за услугата."></textarea>
+                     <span asp-validation-for="Description" class="small text-danger"></span>
+                     </form>
+                </div>
+    </div>
+</div>

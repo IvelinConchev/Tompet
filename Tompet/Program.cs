@@ -27,7 +27,16 @@ builder.Services.AddAuthentication()
 {
     options.AppId = builder.Configuration.GetValue<string>("Facebook:AppId");
     options.AppSecret = builder.Configuration.GetValue<string>("Facebook:AppSecret");
-}); 
+});
+
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    // This lambda determines whether user consent for non-essential 
+    // cookies is needed for a given request.
+    options.CheckConsentNeeded = context => true;
+
+    options.MinimumSameSitePolicy = SameSiteMode.None;
+});
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
@@ -60,6 +69,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseCookiePolicy();
 
 app.UseRouting();
 

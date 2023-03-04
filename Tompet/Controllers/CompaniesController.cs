@@ -12,6 +12,10 @@
         
         public IActionResult Add() => View(new AddCompaniesFormModel());
 
+        //public IActionResult All()
+        //{
+
+        //}
 
         [HttpPost]
         public IActionResult Add(AddCompaniesFormModel company)

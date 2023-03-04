@@ -18,6 +18,7 @@
         {
             public const int ServiceNameMaxLength = 40;
             public const int ServiceNameMinLength = 9;
+            public const int ServiceDescriptionMinLength = 2;
             public const int ServiceDescriptionMaxLength = 100;
         }
 

@@ -7,6 +7,7 @@
     using Tompet.Core.Contracts;
     using Tompet.Infrastructure.Data;
     using Tompet.Models;
+    //using System.IO;
 
     public class HomeController : BaseController
     {
@@ -66,17 +67,21 @@
             {
                 if (file != null && file.Length > 0)
                 {
+                    string path = Path.GetFullPath(@"./wwwroot/Image");
+
                     using (var stream = new MemoryStream())
                     {
                         await file.CopyToAsync(stream);
 
-                        var fileToSave = new ApplicationFile()
-                        {
-                            FileName = file.FileName,
-                            Content = stream.ToArray()
-                        };
+                        //var fileToSave = new ApplicationFile()
+                        //{
+                        //    FileName = file.FileName,
+                        //    Content = stream.ToArray()
+                        //};
 
-                        await fileService.SaveFileAsync(fileToSave);
+                        await System.IO.File.WriteAllBytesAsync(path, stream.ToArray());
+
+                        //await fileService.SaveFileAsync(fileToSave);
                     }
                 }
             }
@@ -91,7 +96,6 @@
             TempData[MessageConstant.SuccessMessage] = "Файла е качен успешно";
 
             return RedirectToAction(nameof(Index));
-
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

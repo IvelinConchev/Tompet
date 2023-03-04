@@ -11,7 +11,7 @@
         @*<div class="offset-md-2 col-md-8 col-sm-12">*@
         <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
          <h2 class="heading-margin text-center">Добавяне на Фирма</h2>
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
   <div class="form-group">
     <label asp-for="Name"></label>
     <input asp-for="Name" class="form-control"  placeholder="Томпет ООД, Tompet OOD...">
@@ -31,6 +31,11 @@
     <label asp-for="Address"></label>
     <input asp-for="Address" class="form-control"  placeholder="Велико Търново...">
      <span asp-validation-for="Address" class="small text-danger"></span>
+  </div>
+  <div class="form-group">
+    <label asp-for="Images"></label>
+    <input asp-for="Images" class="form-control"  enctype="multipart/form-data">
+     <span asp-validation-for="Images" class="small text-danger"></span>
   </div>
 
   <input class="btn btn-primary" type="submit" value="Save" />
