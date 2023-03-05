@@ -1,0 +1,33 @@
+﻿@model AddTechniquesFormModel
+
+@{
+    ViewData["Title"] = "Добавяне на техника";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+            <h2 class="heading-margin text-center">Добавяне на техника</h2>
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Почистваща, копаеща ....">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label asp-for="Type"></label>
+                            <input asp-for="Type" class="form-control" placeholder="Багер, бус, камион..">
+                            <span asp-validation-for="Type" class="small text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Image"></label>
+                            <input asp-for="Image" class="form-control">
+                            <span asp-validation-for="Image" class="small text-danger"></span>
+                        </div>
+                        <br />
+
+                        <input class="btn btn-primary" type="submit" value="Save" />
+                        </br>
+            </form>
+        </div>
+    </div>
+</div>

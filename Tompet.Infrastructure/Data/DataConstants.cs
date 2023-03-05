@@ -25,7 +25,9 @@
         public class Technique
         {
             public const int TechniqueNameMaxLength = 20;
+            public const int TechniqueNameMinLength = 2;
             public const int TechniqueTypeMaxLength = 20;
+            public const int TechniqueTypeMinLength = 2;
         }
 
         public class ApplicationUser
