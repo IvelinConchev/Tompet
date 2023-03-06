@@ -23,8 +23,8 @@
             services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFileService, FileService>();
-        
-           return services;
+
+            return services;
         }
 
         public static IServiceCollection AddApplicationDbContexts(this IServiceCollection services, IConfiguration config)
@@ -46,8 +46,11 @@
 
             //data.Services.AddRange(new[]
             //{
-            //    new Service { Name = "Почистване на канали"},
-            //    new Service { Name = "Почистване на ями"}
+            //    new Service { Name = "Почистване на канали" },
+            //    new Service { Name = "Почистване на ями" },
+            //    new Service { Name = "Изграждане на микропричиствателни" },
+            //    new Service { Name = "Откриване на течове с камера" },
+            //    new Service { Name = "Изкопаване на ями" }
             //});
 
             //data.SaveChanges();

@@ -16,6 +16,11 @@
         public string? Type { get; init; }
 
         [Display(Name = "Снимка")]
-        public string Image { get; init; }
+        public string Images { get; init; }
+
+        [Display(Name = "Услуга")]
+        public Guid ServiceId { get; init; }
+
+        public IEnumerable<TecniqueServiceViewModel> Services { get; set; } 
     }
 }

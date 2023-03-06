@@ -27,5 +27,7 @@
 
         [Display(Name = "Снимка")]
         public string Images { get; init; }
+
+       // public IEnumerable<TecniqueServiceModel> Services { get; set; }
     }
 }
