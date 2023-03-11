@@ -1,7 +1,39 @@
-﻿@model IEnumerable<TechniqueListingViewModel>
+﻿@model AllTechniquesQueryModel
+
+<form method="get">
+    <div class="row mb-5">
+        <div class="form-group col-md-4">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <select asp-for="Name" class="form-control">
+                    <option value="">All</option>
+                    @foreach (var name in Model.Names)
+                    {
+                        <option value="@name">@name</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label asp-for="SearchTerm"></label>
+            <input asp-for="SearchTerm" class="form-control" placeholder="Почистваща, копаеща ....">
+        </div>
+
+        <div class="form-group col-md-4">
+           <div class="form-group">
+                <label asp-for="Sorting"></label>
+                <select asp-for="Sorting" class="form-control">
+                    <option value="0" selected>Name and Type</option>
+                    @*<option value="Name and Type">All</option>*@
+                </select>
+            </div>
+        </div>
+    </div>
+</form>
 
 <div class="row">
-    @foreach (var technique in Model)
+    @foreach (var technique in Model.Techniques)
     {
         <div class="col-md-4">
             <div class="card">

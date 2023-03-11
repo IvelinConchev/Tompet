@@ -1,5 +1,6 @@
 ﻿namespace Tompet.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using Tompet.Infrastructure.Data;
@@ -11,16 +12,32 @@
 
         public TechniquesController(TompetDbContext data) => this.data = data;
 
-        public IActionResult Add() => View(new AddTechniquesFormModel
+        public IActionResult All([FromQuery]
+           AllTechniquesQueryModel query)
         {
-            Services = this.GetTechniqueServices()
-        });
+            var techniquesQuery = this
+                .data.Techniques.AsQueryable();
 
-        public IActionResult All()
-        {
-            var tecniques = this.data
-                .Techniques
-                .OrderByDescending(t => t.Id)
+            if (!string.IsNullOrWhiteSpace(query.Name))
+            {
+                techniquesQuery = techniquesQuery.Where(c => c.Name == query.Name);
+            }
+
+            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
+            {
+                techniquesQuery = techniquesQuery.Where(c =>
+                (c.Name + " " + c.Type).ToLower().Trim().Contains(query.SearchTerm.ToLower())
+                || (c.Type + " " + c.Name).ToLower().Trim().Contains(query.SearchTerm.ToLower()));
+            }
+
+            techniquesQuery = query.Sorting switch
+            {
+                TechniqueSorting.NameAndType => techniquesQuery.OrderByDescending(c => c.Name).ThenBy(c => c.Type),
+                TechniqueSorting.NameAndType or _ => techniquesQuery.OrderByDescending(c => c.Name)
+
+            };
+
+            var tecniques = techniquesQuery
                 .Select(c => new TechniqueListingViewModel
                 {
                     Id = c.Id,
@@ -28,9 +45,20 @@
                     Type = c.Type,
                     ImageUrl = c.ImageUrl,
                     Service = c.Service.Name
-                });
+                })
+                .ToList();
 
-            return View(tecniques);
+            var techniqueNames = this.data
+                .Techniques
+                .Select(c => c.Name)
+                .Distinct()
+                .OrderBy(n => n)
+                .ToList();
+
+            query.Names = techniqueNames;
+            query.Techniques = tecniques;
+
+            return View(query);
         }
 
         private IEnumerable<TecniqueServiceViewModel> GetTechniqueServices()
@@ -43,6 +71,11 @@
             })
             .ToList();
 
+        public IActionResult Add() => View(new AddTechniquesFormModel
+        {
+            Services = this.GetTechniqueServices()
+        });
+
         [HttpPost]
         public IActionResult Add(AddTechniquesFormModel teqnique)
         {
@@ -54,7 +87,7 @@
             if (!ModelState.IsValid)
             {
                 teqnique.Services = this.GetTechniqueServices();
-                 
+
                 return View(teqnique);
             }
 
@@ -70,7 +103,7 @@
 
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(nameof(All));
         }
 
     }

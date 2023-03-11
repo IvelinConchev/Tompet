@@ -7,28 +7,51 @@
     using Tompet.Core.Contracts;
     using Tompet.Infrastructure.Data;
     using Tompet.Models;
+    using Tompet.Models.Home;
+    using Tompet.Models.Home;
+
     //using System.IO;
 
     public class HomeController : BaseController
     {
+        private readonly TompetDbContext data;
+
+        public HomeController(TompetDbContext data)
+        => this.data = data;
+
         private readonly ILogger<HomeController> logger;
 
         private readonly IDistributedCache cache;
 
         private readonly IFileService fileService;
 
-        public HomeController(
-            ILogger<HomeController> _logger,
-            IDistributedCache _cache,
-            IFileService _fileService)
-        {
-            logger = _logger;
-            cache = _cache;
-            fileService = _fileService;
-        }
+        //public HomeController(
+        //    ILogger<HomeController> _logger,
+        //    IDistributedCache _cache,
+        //    IFileService _fileService)
+        //{
+        //    logger = _logger;
+        //    cache = _cache;
+        //    fileService = _fileService;
+        //}
 
         public async Task<IActionResult> Index()
         {
+            var totalTechnique = this.data.Techniques.Count();
+
+            var tecniques = this.data
+                .Techniques
+                .OrderByDescending(t => t.Id)
+                .Select(c => new TechniqueIndexViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Type = c.Type,
+                    ImageUrl = c.ImageUrl,
+                   // Service = c.Service.Name
+                })
+                .Take(3)
+                .ToList();
             // DateTime dateTime = DateTime.Now;
             // var cachedData = await cache.GetStringAsync("cachedTime");
 
@@ -46,7 +69,12 @@
             ViewData[MessageConstant.SuccessMessage] = "Браво, успяхме да подкараме тостера!";
 
 
-            return View();
+            return View(new IndexViewModel
+            {
+                TotalTechniques = totalTechnique,
+                Techniques = tecniques,
+                //TotalOrders = orders
+            }) ;
         }
 
         public IActionResult Privacy(ErrorViewModel error)

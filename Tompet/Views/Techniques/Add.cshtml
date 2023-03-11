@@ -4,7 +4,7 @@
     ViewData["Title"] = "Добавяне на техника";
 }
 
-<div class="container">
+@*<div class="container">*@
     <div class="row">
         <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
             <h2 class="heading-margin text-center">Добавяне на техника</h2>
@@ -13,6 +13,7 @@
                     <label asp-for="Name"></label>
                     <input asp-for="Name" class="form-control" placeholder="Почистваща, копаеща ....">
                     <span asp-validation-for="Name" class="small text-danger"></span>
+                    </div>
                     <div class="form-group">
                         <div class="form-group">
                             <label asp-for="Type"></label>
@@ -40,4 +41,4 @@
             </form>
         </div>
     </div>
-</div>
+@*</div>*@
