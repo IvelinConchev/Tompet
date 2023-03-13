@@ -37,7 +37,11 @@
 
             };
 
+            var totalTechniques = techniquesQuery.Count();
+
             var tecniques = techniquesQuery
+                .Skip((query.CurrentPage - 1) * AllTechniquesQueryModel.TechniquesPerPage)
+                .Take(AllTechniquesQueryModel.TechniquesPerPage)
                 .Select(c => new TechniqueListingViewModel
                 {
                     Id = c.Id,
@@ -55,6 +59,7 @@
                 .OrderBy(n => n)
                 .ToList();
 
+            query.TotalTechnique = totalTechniques;
             query.Names = techniqueNames;
             query.Techniques = tecniques;
 
