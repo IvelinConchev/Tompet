@@ -1,6 +1,7 @@
 ﻿namespace Tompet.Models.Techniques
 {
     using System.ComponentModel.DataAnnotations;
+    using Tompet.Core.Services.Techniques;
 
     public class AllTechniquesQueryModel
     {
@@ -20,6 +21,6 @@
 
         public IEnumerable<string> Names { get; set; }
 
-       public IEnumerable<TechniqueListingViewModel> Techniques { get; set; }
+       public IEnumerable<TechniqueServiceModel> Techniques { get; set; }
     }
 }

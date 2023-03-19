@@ -1,6 +1,6 @@
-﻿namespace Tompet.Models.Techniques
+﻿namespace Tompet.Core.Services.Techniques
 {
-    public class TechniqueListingViewModel
+    public class TechniqueServiceModel
     {
         public Guid Id { get; init; }
 

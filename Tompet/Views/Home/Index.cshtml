@@ -3,14 +3,7 @@
     ViewData["Title"] = "Томпет ООД - Tompet OOD";
 }
 
-@{
-    var technique = Model.Techniques;
-    var firstTechnique = technique.Any() ? technique[0] : null;
-    var secondTechnique = technique.Count > 1 ? technique[1] : null;
-    var thirdTechnique = technique.Count > 2 ? technique[2] : null;
-}
-
-@if (!technique.Any())
+@if (!Model.Techniques.Any())
 {
     <div class="jumbotron">
         <h1 class="display-4">Добре дошли в сайта на Професионалисти учили във Франция!</h1>
@@ -22,30 +15,13 @@
 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-        @if (firstTechnique != null)
+        @for (int i = 0; i < Model.Techniques.Count; i++)
         {
-            <div class="carousel-item active">
-                <img src="@firstTechnique.ImageUrl" class="d-block w-100" alt="@firstTechnique.Name @firstTechnique.Type">
+            var technique = Model.Techniques[i];
+            <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
+                <img src="@technique.ImageUrl" class="d-block w-100" alt="@technique.Name @technique.Type">
                 <div class="carousel-caption d-none d-md-block">
-                    <h5><a class="btn btn-primary" asp-controller="Techniques" asp-action="Details" asp-route-id="@firstTechnique.Id">@firstTechnique.Name @firstTechnique.Type</a></h5>
-                </div>
-            </div>
-        }
-        @if (secondTechnique != null)
-        {
-            <div class="carousel-item">
-                <img src="@secondTechnique.ImageUrl" class="d-block w-100" alt="@secondTechnique.Name @secondTechnique.Type">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5><a class="btn btn-primary" asp-controller="Techniques" asp-action="Details" asp-route-id="@secondTechnique.Id">@secondTechnique.Name @secondTechnique.Type</a></h5>
-                </div>
-            </div>
-        }
-        @if (thirdTechnique != null)
-        {
-            <div class="carousel-item">
-                <img src="@thirdTechnique.ImageUrl" class="d-block w-100" alt="@thirdTechnique.Name @thirdTechnique.Type">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5><a class="btn btn-primary" asp-controller="Techniques" asp-action="Details" asp-route-id="@thirdTechnique.Id">@thirdTechnique.Name @thirdTechnique.Type</a></h5>
+                    <h5><a class="btn btn-primary" asp-controller="Techniques" asp-action="Details" asp-route-id="@technique.Id">@technique.Name @technique.Type</a></h5>
                 </div>
             </div>
         }
@@ -60,16 +36,34 @@
     </a>
 </div>
 
-<div class="jumbotron">
-    <div class="row">
-        <div class="col-md-4">
-            @Model.TotalTechniques Techniques
-        </div>
-        <div class="col-md-4">
-            @Model.TotalUsers Users
-        </div>
-        <div class="col-md-4">
-            @Model.TotalOrders Orders
-        </div>
+<div class="mb-5"></div>
+
+<div class="row">
+    <div class="col-12 text-center">
+        <button class="btn btn-primary" id="statistics-button">Show Statistics</button>
     </div>
 </div>
+
+<div class="jumbotron d-none" id="statistics">
+    <div class="row">
+        <h2 class="col-md-4 text-center" id="total-techniques"></h2>
+        <h2 class="col-md-4 text-center" id="total-users"></h2>
+        <h2 class="col-md-4 text-center" id="total-orders"></h2>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+      $('#statistics-button').on('click', ev => {
+          $.get('/api/statistics', (data) => {
+            $('#total-techniques').text(data.totalTechniques + " Techniques");
+            $('#total-users').text(data.totalUsers + " Users");
+            $('#total-orders').text(data.totalOrders + " Orders");
+
+            $('#statistics').removeClass('d-none');
+             $('#statistics-button').hide();
+      });
+    });
+
+</script>
+}

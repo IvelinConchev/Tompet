@@ -3,65 +3,38 @@
     using System;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
+    using Tompet.Core.Services.Techniques;
     using Tompet.Infrastructure.Data;
+    using Tompet.Models;
     using Tompet.Models.Techniques;
 
     public class TechniquesController : Controller
     {
+        private readonly ITechniqueService techniques;
         private readonly TompetDbContext data;
 
-        public TechniquesController(TompetDbContext data) => this.data = data;
+        public TechniquesController(ITechniqueService techniques, TompetDbContext data)
+        {
+            this.techniques = techniques;
+            this.data = data;
+        }
 
         public IActionResult All([FromQuery]
            AllTechniquesQueryModel query)
         {
-            var techniquesQuery = this
-                .data.Techniques.AsQueryable();
+            var queryResult = this.techniques.All(
+                query.Name,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                AllTechniquesQueryModel.TechniquesPerPage);
 
-            if (!string.IsNullOrWhiteSpace(query.Name))
-            {
-                techniquesQuery = techniquesQuery.Where(c => c.Name == query.Name);
-            }
+            var techniqueNames = this.techniques.AllTechniqueNames();
 
-            if (!string.IsNullOrWhiteSpace(query.SearchTerm))
-            {
-                techniquesQuery = techniquesQuery.Where(c =>
-                (c.Name + " " + c.Type).ToLower().Trim().Contains(query.SearchTerm.ToLower())
-                || (c.Type + " " + c.Name).ToLower().Trim().Contains(query.SearchTerm.ToLower()));
-            }
-
-            techniquesQuery = query.Sorting switch
-            {
-                TechniqueSorting.NameAndType => techniquesQuery.OrderByDescending(c => c.Name).ThenBy(c => c.Type),
-                TechniqueSorting.NameAndType or _ => techniquesQuery.OrderByDescending(c => c.Name)
-
-            };
-
-            var totalTechniques = techniquesQuery.Count();
-
-            var tecniques = techniquesQuery
-                .Skip((query.CurrentPage - 1) * AllTechniquesQueryModel.TechniquesPerPage)
-                .Take(AllTechniquesQueryModel.TechniquesPerPage)
-                .Select(c => new TechniqueListingViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Type = c.Type,
-                    ImageUrl = c.ImageUrl,
-                    Service = c.Service.Name
-                })
-                .ToList();
-
-            var techniqueNames = this.data
-                .Techniques
-                .Select(c => c.Name)
-                .Distinct()
-                .OrderBy(n => n)
-                .ToList();
-
-            query.TotalTechnique = totalTechniques;
             query.Names = techniqueNames;
-            query.Techniques = tecniques;
+            query.TotalTechnique = queryResult.TotalTechniques;
+
+            query.Techniques = queryResult.Techniques;
 
             return View(query);
         }

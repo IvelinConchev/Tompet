@@ -1,4 +1,4 @@
-﻿namespace Tompet.Models.Techniques
+﻿namespace Tompet.Models
 {
     public enum TechniqueSorting
     {

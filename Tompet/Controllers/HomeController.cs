@@ -5,19 +5,25 @@
     using System.Diagnostics;
     using Tompet.Core.Constants;
     using Tompet.Core.Contracts;
+    using Tompet.Core.Services.Statistics;
     using Tompet.Infrastructure.Data;
     using Tompet.Models;
-    using Tompet.Models.Home;
     using Tompet.Models.Home;
 
     //using System.IO;
 
     public class HomeController : BaseController
     {
+        private readonly IStatisticsService statistics;
         private readonly TompetDbContext data;
 
-        public HomeController(TompetDbContext data)
-        => this.data = data;
+        public HomeController(
+            IStatisticsService statistics,
+            TompetDbContext data)
+        {
+            this.statistics = statistics;
+            this.data = data;
+        }
 
         private readonly ILogger<HomeController> logger;
 
@@ -38,6 +44,7 @@
         public async Task<IActionResult> Index()
         {
             var totalTechnique = this.data.Techniques.Count();
+            var totalUsers = this.data.Users.Count();
 
             var tecniques = this.data
                 .Techniques
@@ -52,6 +59,8 @@
                 })
                 .Take(3)
                 .ToList();
+
+            var totalStatistics = this.statistics.Total();
             // DateTime dateTime = DateTime.Now;
             // var cachedData = await cache.GetStringAsync("cachedTime");
 
@@ -71,9 +80,9 @@
 
             return View(new IndexViewModel
             {
-                TotalTechniques = totalTechnique,
-                Techniques = tecniques,
-                //TotalOrders = orders
+                TotalTechniques = totalStatistics.TotalTechniques,
+                TotalUsers = totalStatistics.TotalUsers,
+                Techniques = tecniques
             }) ;
         }
 
