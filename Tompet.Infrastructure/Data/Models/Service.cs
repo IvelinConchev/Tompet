@@ -1,4 +1,4 @@
-﻿namespace Tompet.Infrastructure.Data
+﻿namespace Tompet.Infrastructure.Data.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;

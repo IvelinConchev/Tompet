@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Tompet.Infrastructure.Data;
+    using Tompet.Infrastructure.Data.Models;
     using Tompet.Models.Services;
 
     public class ServicesController : Controller

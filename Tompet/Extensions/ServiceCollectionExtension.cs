@@ -6,7 +6,7 @@
     using Tompet.Core.Services.Statistics;
     using Tompet.Core.Services.Techniques;
     using Tompet.Infrastructure.Data;
-    using Tompet.Infrastructure.Data.Repositories;
+    using Tompet.Infrastructure.Repositories;
 
     public static class ServiceCollectionExtension
     {

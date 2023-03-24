@@ -6,7 +6,7 @@
     using Tompet.Core.Contracts;
     using Tompet.Core.Models;
     using Tompet.Infrastructure.Data.Identity;
-    using Tompet.Infrastructure.Data.Repositories;
+    using Tompet.Infrastructure.Repositories;
 
     public class UserService : IUserService
     {

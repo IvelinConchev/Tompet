@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Tompet.Infrastructure.Data;
+    using Tompet.Infrastructure.Data.Models;
     using Tompet.Models.Companies;
 
     public class CompaniesController : Controller

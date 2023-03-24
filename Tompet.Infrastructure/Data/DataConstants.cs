@@ -30,6 +30,15 @@
             public const int TechniqueTypeMinLength = 2;
         }
 
+        public class Manager
+        {
+            public const int ManagerNameMinLength = 2;
+            public const int ManagerNameMaxLength = 25;
+            public const int PhoneNumberMinLength = 6;
+            public const int PhoneNumberMaxLength = 10;
+
+        }
+
         public class ApplicationUser
         {
             public const int ApplicationUserFirstNameMaxLength = 50;

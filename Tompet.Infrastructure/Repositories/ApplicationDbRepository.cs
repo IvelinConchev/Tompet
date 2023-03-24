@@ -1,5 +1,6 @@
-﻿namespace Tompet.Infrastructure.Data.Repositories
+﻿namespace Tompet.Infrastructure.Repositories
 {
+    using Tompet.Infrastructure.Data;
     using Tompet.Infrastructure.Data.Common;
 
     public class ApplicationDbRepository : Repository, IApplicationDbRepository

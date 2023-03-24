@@ -1,4 +1,4 @@
-﻿namespace Tompet.Infrastructure.Data.Repositories
+﻿namespace Tompet.Infrastructure.Repositories
 {
     using Tompet.Infrastructure.Data.Common;
 

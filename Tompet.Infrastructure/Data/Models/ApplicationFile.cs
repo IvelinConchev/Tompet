@@ -1,4 +1,4 @@
-﻿namespace Tompet.Infrastructure.Data
+﻿namespace Tompet.Infrastructure.Data.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -8,7 +8,7 @@
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public string FileName { get; set; }
+        public string? FileName { get; set; }
 
         public byte[] Content { get; set; }
     }

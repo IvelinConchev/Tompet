@@ -1,13 +1,9 @@
 ﻿namespace Tompet.Core.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using Tompet.Core.Contracts;
-    using Tompet.Infrastructure.Data;
-    using Tompet.Infrastructure.Data.Repositories;
+    using Tompet.Infrastructure.Data.Models;
+    using Tompet.Infrastructure.Repositories;
 
     public class FileService : IFileService
     {

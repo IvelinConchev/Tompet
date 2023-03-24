@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tompet.Core.Constants;
 using Tompet.Infrastructure.Data;
@@ -45,6 +46,11 @@ builder.Services.AddControllersWithViews()
         options.ModelBinderProviders.Insert(1, new DateTimeModelBinderProvider(FormatingConstant.NormalDateFormat));
         options.ModelBinderProviders.Insert(2, new DoubleModelBinderProvider());
     });
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+});
 
 builder.Services.AddStackExchangeRedisCache(options => 
 {

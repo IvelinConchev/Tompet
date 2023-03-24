@@ -4,6 +4,7 @@
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Tompet.Infrastructure.Data.Identity;
+    using Tompet.Infrastructure.Data.Models;
 
     public class TompetDbContext : IdentityDbContext<ApplicationUser>
     {

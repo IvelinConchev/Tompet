@@ -56,8 +56,14 @@
            asp-route-searchTerm="@Model.SearchTerm"
            asp-route-sorting="@((int)Model.Sorting)"><<</a>
     </div>
+
+    @{
+        var shouldButtonBeDisabled = Model.CurrentPage == maxPage ||
+            !Model.Techniques.Any();
+    }
+
     <div class="col-md-6">
-        <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)"
+        <a class="btn btn-primary float-sm-right @(shouldButtonBeDisabled ? "disabled" : string.Empty)" style="margin-top: 10px"
            asp-controller="Techniques"
            asp-action="All"
            asp-route-currentPage="@(Model.CurrentPage + 1)"

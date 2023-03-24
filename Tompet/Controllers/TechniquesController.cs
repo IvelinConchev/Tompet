@@ -1,11 +1,10 @@
 ﻿namespace Tompet.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
     using Tompet.Core.Services.Techniques;
     using Tompet.Infrastructure.Data;
-    using Tompet.Models;
+    using Tompet.Infrastructure.Data.Models;
     using Tompet.Models.Techniques;
 
     public class TechniquesController : Controller
