@@ -1,8 +1,11 @@
 ﻿namespace Tompet.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
+    using Tompet.Core.Services.Managers;
     using Tompet.Core.Services.Techniques;
+    using Tompet.Extensions;
     using Tompet.Infrastructure.Data;
     using Tompet.Infrastructure.Data.Models;
     using Tompet.Models.Techniques;
@@ -11,6 +14,7 @@
     {
         private readonly ITechniqueService techniques;
         private readonly TompetDbContext data;
+        private readonly IManagerService managers;
 
         public TechniquesController(ITechniqueService techniques, TompetDbContext data)
         {
@@ -48,10 +52,23 @@
             })
             .ToList();
 
-        public IActionResult Add() => View(new AddTechniquesFormModel
+        [Authorize]
+        //public IActionResult Mine()
+
+
+        [Authorize]
+        public IActionResult Add()
         {
-            Services = this.GetTechniqueServices()
-        });
+            if (!this.managers.isManager(this.User.Id()))
+            {
+                return RedirectToAction(nameof(ManagersContoller.Become), "Managers");
+            }
+
+            return View(new AddTechniquesFormModel
+            {
+                Services = this.GetTechniqueServices()
+            });
+        }
 
         [HttpPost]
         public IActionResult Add(AddTechniquesFormModel teqnique)

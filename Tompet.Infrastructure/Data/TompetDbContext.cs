@@ -29,5 +29,7 @@
         public DbSet<Technique> Techniques { get; set; }
 
         public DbSet<ApplicationFile> Files { get; set; }
+
+        public DbSet<Manager> Managers { get; set; }
     }
 }

@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Tompet.Core.Contracts;
     using Tompet.Core.Services;
+    using Tompet.Core.Services.Managers;
     using Tompet.Core.Services.Statistics;
     using Tompet.Core.Services.Techniques;
     using Tompet.Infrastructure.Data;
@@ -24,6 +25,7 @@
         {
             services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IManagerService, ManagerService>();
             services.AddScoped<IFileService, FileService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<ITechniqueService, TechniqueService>();

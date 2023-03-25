@@ -4,9 +4,11 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Data.DataConstants.Company;
+    using static Data.DataConstants.DefaultLengthForKeyGuid;
     public class Company
     {
         [Key]
+        [StringLength(DefaultLength)]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]

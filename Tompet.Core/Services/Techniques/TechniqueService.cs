@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Tompet.Infrastructure.Data;
+    using Tompet.Infrastructure.Data.Models;
     using Tompet.Models;
 
     public class TechniqueService : ITechniqueService
@@ -64,6 +65,20 @@
             };
         }
 
+        //public IEnumerable<TechniqueServiceModel> ByUser(string userId)
+        //   => this.data
+        //    .Techniques
+        //    .Where(m => m.Manager.UserId = userId)
+        //    .Select(c => new TechniqueServiceModel
+        //    {
+        //        Id = c.Id,
+        //        Name = c.Name,
+        //        Type = c.Type,
+        //        ImageUrl = c.ImageUrl,
+        //        Service = c.Service.Name
+        //    })
+        //        .ToList();
+
         public IEnumerable<string> AllTechniqueNames()
               => this.data
                 .Techniques
@@ -71,5 +86,12 @@
                 .Distinct()
                 .OrderBy(n => n)
                 .ToList();
+
+        public IEnumerable<TechniqueServiceModel> ByUser(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        //private IEnumerable<TechniqueServiceModel> GetTechniques(IQueryable<Technique>) techniqueQuery)
     }
 }

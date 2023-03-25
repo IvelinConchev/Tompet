@@ -3,6 +3,8 @@
 @*@inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager*@
 
+
+
 @if (User.Identity?.IsAuthenticated ?? false)
 {
    <div class="user-panel mt-3 pb-3 mb-3 d-flex">

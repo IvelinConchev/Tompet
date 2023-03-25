@@ -98,15 +98,15 @@
         }
 
 
-        public async Task<IActionResult> CreateRole()
-        {
-            //await roleManager.CreateAsync(new IdentityRole()
-            //{
-            //    //Name = "Administrator"
-            //    Name = "User"
-            //});
+        //public async Task<IActionResult> CreateRole()
+        //{
+        //    await roleManager.CreateAsync(new IdentityRole()
+        //    {
+        //        //Name = "Administrator"
+        //        Name = "User"
+        //    });
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
     }
 }

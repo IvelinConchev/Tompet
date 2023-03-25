@@ -3,9 +3,12 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Tompet.Infrastructure.Data.DataConstants.Manager;
+    using static Tompet.Infrastructure.Data.DataConstants.DefaultLengthForKeyGuid;
 
     public class Manager
     {
+        [Key]
+        [StringLength(DefaultLength)]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]

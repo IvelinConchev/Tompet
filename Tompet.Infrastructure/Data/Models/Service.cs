@@ -4,10 +4,12 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Data.DataConstants.Service;
+    using static Data.DataConstants.DefaultLengthForKeyGuid;
 
     public class Service
     {
         [Key]
+        [StringLength(DefaultLength)]
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]

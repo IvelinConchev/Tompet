@@ -1,25 +1,54 @@
-﻿<nav class="mt-2">
+﻿@using Tompet.Extensions
+@using Microsoft.AspNetCore.Identity
+@using Tompet.Infrastructure.Data.Identity
+@using Tompet.Core.Services.Managers
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IManagerService Managers
+
+<nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
             <a href="/" class="nav-link active">
-               <i class="fas fa-truck-moving"></i>
+                <i class="fas fa-truck-moving"></i>
                 <p>
                     Home
                 </p>
             </a>
         </li>
-        @if (User.IsInRole(Tompet.Infrastructure.Data.DataConstants.UserConstant.Roles.Administrator))
-        {
-            <li class="nav-item">
+        <li class="nav-item">
             <a href="/" class="nav-link active">
-               <i class="fas fa-truck-moving"></i>
+                <i class="fas fa-truck-moving"></i>
                 <p>
-                    My secret menu
+                    Връзка със специалист
                 </p>
             </a>
         </li>
+        @if (User.IsInRole(Tompet.Infrastructure.Data.DataConstants.UserConstant.Roles.AdministratorRoleName))
+        {
+            var userId = User.Id();
+            var userIsManager = Managers.isManager(userId);
+
+            @if (userIsManager)
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Techniques" asp-action="Mine">My Techniques</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item">
+                    <a href="/" class="nav-link active">
+                        <i class="fas fa-truck-moving"></i>
+                        <p>
+                            Стани Менaджър
+                        </p>
+                    </a>
+                </li>
+            }
         }
     </ul>
-</nav>
+

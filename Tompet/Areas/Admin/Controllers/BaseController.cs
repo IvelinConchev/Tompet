@@ -4,7 +4,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Tompet.Infrastructure.Data;
 
-    [Authorize(Roles = DataConstants.UserConstant.Roles.Administrator)]
+    //[Authorize(Roles = DataConstants.UserConstant.Roles.AdministratorRoleName)]
     [Area("Admin")]
     public class BaseController : Controller
     {

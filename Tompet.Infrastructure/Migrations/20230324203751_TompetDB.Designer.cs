@@ -9,11 +9,11 @@ using Tompet.Infrastructure.Data;
 
 #nullable disable
 
-namespace Tompet.Infrastructure.Data.Migrations
+namespace Tompet.Infrastructure.Migrations
 {
     [DbContext(typeof(TompetDbContext))]
-    [Migration("20230324144156_ManagerDb")]
-    partial class ManagerDb
+    [Migration("20230324203751_TompetDB")]
+    partial class TompetDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -256,6 +256,7 @@ namespace Tompet.Infrastructure.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
@@ -287,10 +288,37 @@ namespace Tompet.Infrastructure.Data.Migrations
                     b.ToTable("Companies");
                 });
 
+            modelBuilder.Entity("Tompet.Infrastructure.Data.Models.Manager", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Managers");
+                });
+
             modelBuilder.Entity("Tompet.Infrastructure.Data.Models.Service", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -311,10 +339,14 @@ namespace Tompet.Infrastructure.Data.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ManagerId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -330,6 +362,8 @@ namespace Tompet.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ManagerId");
 
                     b.HasIndex("ServiceId");
 
@@ -389,13 +423,26 @@ namespace Tompet.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("Tompet.Infrastructure.Data.Models.Technique", b =>
                 {
+                    b.HasOne("Tompet.Infrastructure.Data.Models.Manager", "Manager")
+                        .WithMany("Techniques")
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Tompet.Infrastructure.Data.Models.Service", "Service")
                         .WithMany("Techniques")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Manager");
+
                     b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("Tompet.Infrastructure.Data.Models.Manager", b =>
+                {
+                    b.Navigation("Techniques");
                 });
 
             modelBuilder.Entity("Tompet.Infrastructure.Data.Models.Service", b =>

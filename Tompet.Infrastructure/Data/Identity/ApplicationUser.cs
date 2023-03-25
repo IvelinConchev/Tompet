@@ -7,10 +7,15 @@
 
     public class ApplicationUser : IdentityUser
     {
+        [Required]
         [StringLength(ApplicationUserFirstNameMaxLength)]
         public string? FirstName { get; set; }
 
+        [Required]
         [StringLength(ApplicationUserLastNameMaxLength)]
         public string? LastName { get; set; }
+
+        //[StringLength(ApplicationUserFullNameMaxLength)]
+        //public string? FullName { get; set; }
     }
 }

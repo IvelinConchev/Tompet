@@ -11,6 +11,8 @@
             int currentPage,
             int techniquesPerPage);
 
+        IEnumerable<TechniqueServiceModel> ByUser(string userId);
+
         IEnumerable<string> AllTechniqueNames();
     }
 }
