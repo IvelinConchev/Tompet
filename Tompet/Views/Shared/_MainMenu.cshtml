@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Identity
 @using Tompet.Infrastructure.Data.Identity
 @using Tompet.Core.Services.Managers
+@using Tompet.Infrastructure.Data
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -27,22 +28,31 @@
                 </p>
             </a>
         </li>
-        @if (User.IsInRole(Tompet.Infrastructure.Data.DataConstants.UserConstant.Roles.AdministratorRoleName))
+        @if (User.IsInRole(DataConstants.UserConstant.Roles.AdministratorRoleName) || User.IsInRole(DataConstants.UserConstant.Roles.ManagerRoleName))
         {
             var userId = User.Id();
             var userIsManager = Managers.isManager(userId);
+            var userIsAdmin = User.IsAdmin();
 
             @if (userIsManager)
             {
-                <li class="nav-item">
+               @* <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Techniques" asp-action="Mine">My Techniques</a>
+                </li>*@
+                <li class="nav-item">
+                    <a href="/Managers/Become" class="nav-link active">
+                        <i class="fas fa-phone"></i>
+                        <p>
+                            Стани Менaджър
+                        </p>
+                    </a>
                 </li>
             }
             else
             {
                 <li class="nav-item">
-                    <a href="/" class="nav-link active">
-                        <i class="fas fa-truck-moving"></i>
+                    <a href="/Managers/Become" class="nav-link active">
+                        <i class="fas fa-phone"></i>
                         <p>
                             Стани Менaджър
                         </p>
@@ -51,4 +61,3 @@
             }
         }
     </ul>
-

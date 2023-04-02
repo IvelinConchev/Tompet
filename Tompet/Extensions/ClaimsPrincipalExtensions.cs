@@ -3,6 +3,7 @@
     using System.Security.Claims;
 
     using static Tompet.Infrastructure.Data.DataConstants.UserConstant.Roles;
+    //using static Tompet.Infrastructure.Data.DataConstants.Messages;
     public static class ClaimsPrincipalExtensions
     {
         public static string Id(this ClaimsPrincipal user)

@@ -1,0 +1,12 @@
+﻿@model IEnumerable<TechniqueServiceModel>
+
+@{
+    ViewBag.Title = "My Techniques";
+}
+
+@if (!Model.Any())
+{
+    <h2 class="text-center">You do not have any techniques yet!</h2>
+}
+
+<partial name="_TechniquesPartial" model="@Model" />

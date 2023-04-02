@@ -103,7 +103,8 @@
         //    await roleManager.CreateAsync(new IdentityRole()
         //    {
         //        //Name = "Administrator"
-        //        Name = "User"
+        //        //Name = "User"
+        //        Name = "Manager"
         //    });
 
         //    return Ok();

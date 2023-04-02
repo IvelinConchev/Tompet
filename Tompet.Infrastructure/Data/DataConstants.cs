@@ -61,7 +61,8 @@
             public static class Roles
             {
                 public const string AdministratorRoleName = "Administrator";
-                public const string Manager = "Administrator, Manager";
+                public const string ManagerRoleName = "Administrator, Manager";
+                public const string UserRoleName = "User";
             }
         }
 

@@ -43,18 +43,10 @@
 
             var totalTechniques = techniquesQuery.Count();
 
-            var tecniques = techniquesQuery
+            var tecniques = GetTechniques(techniquesQuery
                 .Skip((currentPage - 1) * techniquesPerPage)
-                .Take(techniquesPerPage)
-                .Select(c => new TechniqueServiceModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Type = c.Type,
-                    ImageUrl = c.ImageUrl,
-                    Service = c.Service.Name
-                })
-                .ToList();
+                .Take(techniquesPerPage));
+
 
             return new TechniquesQueryServiceModel
             {
@@ -65,19 +57,11 @@
             };
         }
 
-        //public IEnumerable<TechniqueServiceModel> ByUser(string userId)
-        //   => this.data
-        //    .Techniques
-        //    .Where(m => m.Manager.UserId = userId)
-        //    .Select(c => new TechniqueServiceModel
-        //    {
-        //        Id = c.Id,
-        //        Name = c.Name,
-        //        Type = c.Type,
-        //        ImageUrl = c.ImageUrl,
-        //        Service = c.Service.Name
-        //    })
-        //        .ToList();
+
+        public IEnumerable<TechniqueServiceModel> ByUser(string userId)
+           => GetTechniques(this.data
+               .Techniques
+               .Where(t => t.Manager.UserId == userId));
 
         public IEnumerable<string> AllTechniqueNames()
               => this.data
@@ -87,11 +71,19 @@
                 .OrderBy(n => n)
                 .ToList();
 
-        public IEnumerable<TechniqueServiceModel> ByUser(string userId)
-        {
-            throw new NotImplementedException();
-        }
 
-        //private IEnumerable<TechniqueServiceModel> GetTechniques(IQueryable<Technique>) techniqueQuery)
+        private static IEnumerable<TechniqueServiceModel> GetTechniques(IQueryable<Technique> techniqueQuery)
+            => techniqueQuery
+            .Select(c => new TechniqueServiceModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Type = c.Type,
+                ImageUrl = c.ImageUrl,
+                Service = c.Service.Name
+            })
+                .ToList();
+
+       
     }
 }

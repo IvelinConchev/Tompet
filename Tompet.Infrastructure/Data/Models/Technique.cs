@@ -28,7 +28,7 @@
         [ForeignKey(nameof(ServiceId))]
         public Service Service { get; set; }
 
-        public Guid ManagerId { get; init; }
+        public Guid ManagerId { get; set; }
 
         [ForeignKey(nameof(ManagerId))]
         public Manager Manager { get; init; }

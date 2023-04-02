@@ -25,7 +25,7 @@
             var serviceData = new Service()
             {
                 Name = service.Name,
-                Description = service.Description,
+                //Description = service.Description,
             };
 
             this.data.Services.Add(serviceData);

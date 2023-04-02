@@ -48,7 +48,7 @@
 
 <div class="row mb-5">
     <div class="col-md-6">
-        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
            asp-controller="Techniques"
            asp-action="All"
            asp-route-currentPage="@previousPage"
@@ -73,18 +73,10 @@
     </div>
 </div>
 
-<div class="row">
-    @foreach (var technique in Model.Techniques)
-    {
-        <div class="col-md-4">
-            <div class="card">
-                <img class="card-img-top" src="@technique.ImageUrl" alt="@technique.Name @technique.Type (@technique.Service)">
-                <div class="card-body text-center">
-                    <h5 class="card-title text-center">@technique.Name @technique.Type </h5>
-                    <a asp-controller="Techniques" asp-action="Details" asp-route-id="@technique.Id" class="btn btn-primary">Виж</a>
-                </div>
-            </div>
-        </div>
-    }
-</div>
+@if (!Model.Techniques.Any())
+{
+    <h2 class="text-center">No techniques found by the the given criteria!</h2>
+}
 
+
+<partial name="_TechniquesPartial" model="@Model.Techniques" />

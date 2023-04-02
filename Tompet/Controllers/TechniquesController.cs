@@ -36,30 +36,24 @@
 
             query.Names = techniqueNames;
             query.TotalTechnique = queryResult.TotalTechniques;
-
             query.Techniques = queryResult.Techniques;
 
             return View(query);
         }
 
-        private IEnumerable<TecniqueServiceViewModel> GetTechniqueServices()
-        => this.data
-            .Services
-            .Select(t => new TecniqueServiceViewModel
-            {
-                Id = t.Id,
-                Name = t.Name,
-            })
-            .ToList();
-
         [Authorize]
-        //public IActionResult Mine()
+        public IActionResult Mine()
+        {
+            var myTechniques = this.techniques.ByUser(this.User.Id());
+
+            return View(myTechniques);
+        }
 
 
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.managers.isManager(this.User.Id()))
+            if (!this.UserIsManager())
             {
                 return RedirectToAction(nameof(ManagersContoller.Become), "Managers");
             }
@@ -71,14 +65,26 @@
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Add(AddTechniquesFormModel teqnique)
         {
+            var managerId = this.data
+                .Managers
+                .Where(m => m.UserId == this.User.Id())
+                .Select(m => m.Id)
+                .FirstOrDefault();
+
+            if (managerId.Equals(Guid.Empty))
+            {
+                return RedirectToAction(nameof(ManagersContoller.Become), "Managers");
+            }
+
             if (!this.data.Services.Any(s => s.Id == teqnique.ServiceId))
             {
                 this.ModelState.AddModelError(nameof(teqnique.ServiceId), "Services don't found");
             }
 
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 teqnique.Services = this.GetTechniqueServices();
 
@@ -91,6 +97,7 @@
                 Type = teqnique.Type,
                 ImageUrl = teqnique.Images,
                 ServiceId = teqnique.ServiceId,
+                ManagerId = managerId
             };
 
             this.data.Techniques.Add(teqniqueData);
@@ -100,5 +107,19 @@
             return RedirectToAction(nameof(All));
         }
 
+        private bool UserIsManager()
+            => this.data
+            .Managers
+            .Any(m => m.UserId == this.User.Id());
+
+        private IEnumerable<TecniqueServiceViewModel> GetTechniqueServices()
+            => this.data
+            .Services
+            .Select(s => new TecniqueServiceViewModel
+            {
+                Id = s.Id,
+                Name = s.Name,
+            })
+            .ToList();
     }
 }

@@ -16,8 +16,8 @@
         [StringLength(ServiceNameMaxLength)]
         public string? Name { get; set; }
 
-        [StringLength(ServiceDescriptionMaxLength)]
-        public string? Description { get; set; }
+        //[StringLength(ServiceDescriptionMaxLength)]
+        //public string? Description { get; set; }
 
         public IList<Technique> Techniques { get; set; } = new List<Technique>();
     }

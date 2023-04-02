@@ -1,0 +1,16 @@
+﻿@model IEnumerable<TechniqueServiceModel>
+
+<div class="row">
+    @foreach (var technique in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-3">
+            <img class="card-img-top" src="@technique.ImageUrl" alt="@technique.Name @technique.Type (@technique.Service)">
+                <div class="card-body text-center">
+                    <h5 class="card-title text-center">@technique.Name @technique.Type </h5>
+                    <a asp-controller="Techniques" asp-action="Details" asp-route-id="@technique.Id" class="btn btn-primary">Виж</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
