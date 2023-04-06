@@ -26,7 +26,7 @@
         public string? Address { get; init; }
 
         [Display(Name = "Снимка")]
-        public string Images { get; init; }
+        public string? Images { get; init; }
 
        // public IEnumerable<TecniqueServiceModel> Services { get; set; }
     }

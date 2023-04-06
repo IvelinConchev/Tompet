@@ -13,5 +13,17 @@
           => this.data
             .Managers
             .Any(m => m.UserId == userId);
+
+        public Guid IdByUser(string userId)
+          => this.data
+                .Managers
+                .Where(m => m.UserId == userId)
+                .Select(m => m.Id)
+                .FirstOrDefault();
+
+        //string IManagerService.GetIdByUser(string userId)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

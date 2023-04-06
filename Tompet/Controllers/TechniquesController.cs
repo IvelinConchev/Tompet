@@ -2,24 +2,22 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Collections.Generic;
     using Tompet.Core.Services.Managers;
     using Tompet.Core.Services.Techniques;
     using Tompet.Extensions;
-    using Tompet.Infrastructure.Data;
-    using Tompet.Infrastructure.Data.Models;
     using Tompet.Models.Techniques;
 
     public class TechniquesController : Controller
     {
         private readonly ITechniqueService techniques;
-        private readonly TompetDbContext data;
         private readonly IManagerService managers;
 
-        public TechniquesController(ITechniqueService techniques, TompetDbContext data)
+        public TechniquesController(
+            ITechniqueService techniques, 
+            IManagerService managers)
         {
             this.techniques = techniques;
-            this.data = data;
+            this.managers = managers;
         }
 
         public IActionResult All([FromQuery]
@@ -32,7 +30,7 @@
                 query.CurrentPage,
                 AllTechniquesQueryModel.TechniquesPerPage);
 
-            var techniqueNames = this.techniques.AllTechniqueNames();
+            var techniqueNames = this.techniques.AllNames();
 
             query.Names = techniqueNames;
             query.TotalTechnique = queryResult.TotalTechniques;
@@ -53,73 +51,115 @@
         [Authorize]
         public IActionResult Add()
         {
-            if (!this.UserIsManager())
+            if (!this.managers.isManager(this.User.Id()))
             {
                 return RedirectToAction(nameof(ManagersContoller.Become), "Managers");
             }
 
-            return View(new AddTechniquesFormModel
+            return View(new TechniqueFormModel
             {
-                Services = this.GetTechniqueServices()
+                Services = this.techniques.AllCategories()
             });
         }
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(AddTechniquesFormModel teqnique)
+        public IActionResult Add(TechniqueFormModel technique)
         {
-            var managerId = this.data
-                .Managers
-                .Where(m => m.UserId == this.User.Id())
-                .Select(m => m.Id)
-                .FirstOrDefault();
+            var managerId = this.managers.IdByUser(this.User.Id());
 
             if (managerId.Equals(Guid.Empty))
             {
                 return RedirectToAction(nameof(ManagersContoller.Become), "Managers");
             }
 
-            if (!this.data.Services.Any(s => s.Id == teqnique.ServiceId))
+            if (!this.techniques.ServiceExist(technique.ServiceId))
             {
-                this.ModelState.AddModelError(nameof(teqnique.ServiceId), "Services don't found");
+                this.ModelState.AddModelError(nameof(technique.ServiceId), "Services don't found");
             }
 
             if (ModelState.IsValid)
             {
-                teqnique.Services = this.GetTechniqueServices();
+                technique.Services = this.techniques.AllCategories();
 
-                return View(teqnique);
+                return View(technique);
             }
 
-            var teqniqueData = new Technique
-            {
-                Name = teqnique.Name,
-                Type = teqnique.Type,
-                ImageUrl = teqnique.Images,
-                ServiceId = teqnique.ServiceId,
-                ManagerId = managerId
-            };
-
-            this.data.Techniques.Add(teqniqueData);
-
-            this.data.SaveChanges();
+            this.techniques.Create(
+                technique.Name,
+                technique.Type,
+                technique.Images,
+                technique.ServiceId,
+                managerId);
 
             return RedirectToAction(nameof(All));
         }
 
-        private bool UserIsManager()
-            => this.data
-            .Managers
-            .Any(m => m.UserId == this.User.Id());
+        [Authorize]
+        public ActionResult Edit(Guid id)
+        {
+            var userId = this.User.Id();
 
-        private IEnumerable<TecniqueServiceViewModel> GetTechniqueServices()
-            => this.data
-            .Services
-            .Select(s => new TecniqueServiceViewModel
+            if (!this.managers.isManager(userId) && !User.IsAdmin())
             {
-                Id = s.Id,
-                Name = s.Name,
-            })
-            .ToList();
+                return RedirectToAction(nameof(ManagersContoller.Become), "Managers");
+            }
+
+            var technique = this.techniques.Details(id);
+
+            if (technique.UserId != userId)
+            {
+                return Unauthorized();
+                //return BadRequest();
+            }
+
+            return View(new TechniqueFormModel
+            {
+                Name = technique.Name,
+                Type = technique.Type,
+                Images = technique.ImageUrl,
+                ServiceId = technique.ServiceId,
+                Services = this.techniques.AllCategories()
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(Guid id, TechniqueFormModel technique)
+        {
+            var managerId = this.managers.IdByUser(this.User.Id());
+
+            if (managerId.Equals(Guid.Empty))
+            {
+                return RedirectToAction(nameof(ManagersContoller.Become), "Managers");
+            }
+
+            if (!this.techniques.ServiceExist(technique.ServiceId))
+            {
+                this.ModelState.AddModelError(nameof(technique.ServiceId), "Services don't found");
+            }
+
+            if (ModelState.IsValid)
+            {
+                technique.Services = this.techniques.AllCategories();
+
+                return View(technique);
+            }
+
+            if (!this.techniques.IsByManager(id, managerId))
+            {
+                return BadRequest();
+            }
+
+            this.techniques.Edit(
+                id,
+                technique.Name,
+                technique.Type,
+                technique.Images,
+                technique.ServiceId);
+
+
+            return RedirectToAction(nameof(All));
+        }
     }
 }

@@ -10,6 +10,6 @@
 
         public string? ImageUrl { get; init; }
 
-        public string? Service { get; init; }
+        public string? ServiceName { get; init; }
     }
 }

@@ -7,10 +7,10 @@
     {
         public const int TechniquesPerPage = 3;
 
-        public string Name { get; init; }
+        public string? Name { get; init; }
 
         [Display(Name = "Търсене")]
-        public string SearchTerm { get; init; }
+        public string? SearchTerm { get; init; }
 
         public TechniqueSorting Sorting { get; init; }
 
@@ -19,7 +19,7 @@
 
         public int TotalTechnique { get; set; }
 
-        public IEnumerable<string> Names { get; set; }
+        public IEnumerable<string>? Names { get; set; }
 
        public IEnumerable<TechniqueServiceModel> Techniques { get; set; }
     }
