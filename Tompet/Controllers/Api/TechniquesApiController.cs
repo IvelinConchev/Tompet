@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Tompet.Core.Services.Techniques;
+    using Tompet.Core.Services.Techniques.Models;
     using Tompet.Infrastructure.Data;
     using Tompet.Models;
     using Tompet.Models.Api.Techniques;

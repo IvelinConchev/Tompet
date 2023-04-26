@@ -1,5 +1,6 @@
 ﻿namespace Tompet.Core.Services.Techniques
 {
+    using Tompet.Core.Services.Techniques.Models;
     using Tompet.Models;
 
     public interface ITechniqueService
@@ -33,7 +34,7 @@
 
         IEnumerable<string> AllNames();
 
-        IEnumerable<TechniqueServiceServiceModel> AllCategories();
+        IEnumerable<TechniqueServiceServiceModel> AllServices();
 
         bool ServiceExist(Guid serviceId);
     }

@@ -1,4 +1,6 @@
-﻿@model IEnumerable<TechniqueServiceModel>
+﻿@using Tompet.Extensions
+@using Tompet.Infrastructure.Data
+@model IEnumerable<TechniqueServiceModel>
 
 <div class="row">
     @foreach (var technique in Model)
@@ -9,7 +11,7 @@
                 <div class="card-body text-center">
                     <h5 class="card-title text-center">@technique.Name @technique.Type </h5>
                     <a asp-controller="Techniques" asp-action="Details" asp-route-id="@technique.Id" class="btn btn-primary">Виж</a>
-                    @if (ViewBag.AllowTechniqueEdit == true)
+                    @if (ViewBag.AllowTechniqueEdit == true || User.IsAdmin())
                     {
                         <a asp-controller="Techniques" asp-action="Edit" asp-route-id="@technique.Id" class="btn btn-warning">Edit</a>
                         <a asp-controller="Techniques" asp-action="Delete" asp-route-id="@technique.Id" class="btn btn-danger">Delete</a>

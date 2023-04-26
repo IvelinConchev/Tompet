@@ -1,5 +1,7 @@
 ﻿namespace Tompet.Controllers
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Distributed;
     using System.Diagnostics;
@@ -15,13 +17,16 @@
     public class HomeController : BaseController
     {
         private readonly IStatisticsService statistics;
+        private readonly IConfigurationProvider mapper;
         private readonly TompetDbContext data;
 
         public HomeController(
             IStatisticsService statistics,
+            IMapper mapper,
             TompetDbContext data)
         {
             this.statistics = statistics;
+            this.mapper = mapper.ConfigurationProvider;
             this.data = data;
         }
 
@@ -49,14 +54,7 @@
             var tecniques = this.data
                 .Techniques
                 .OrderByDescending(t => t.Id)
-                .Select(c => new TechniqueIndexViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Type = c.Type,
-                    ImageUrl = c.ImageUrl,
-                   // Service = c.Service.Name
-                })
+                .ProjectTo<TechniqueIndexViewModel>(this.mapper)
                 .Take(3)
                 .ToList();
 

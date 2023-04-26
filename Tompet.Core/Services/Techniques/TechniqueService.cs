@@ -1,6 +1,9 @@
 ﻿namespace Tompet.Core.Services.Techniques
 {
+    using AutoMapper;
+    using AutoMapper.QueryableExtensions;
     using System.Collections.Generic;
+    using Tompet.Core.Services.Techniques.Models;
     using Tompet.Infrastructure.Data;
     using Tompet.Infrastructure.Data.Models;
     using Tompet.Models;
@@ -8,9 +11,14 @@
     public class TechniqueService : ITechniqueService
     {
         private readonly TompetDbContext data;
+        private readonly IConfigurationProvider mapper;
 
-        public TechniqueService(TompetDbContext data)
-            => this.data = data;
+        public TechniqueService(TompetDbContext data, 
+            IMapper mapper)
+        {
+            this.data = data;
+            this.mapper = mapper.ConfigurationProvider;
+        } 
 
         public TechniquesQueryServiceModel All(
             string name,
@@ -61,18 +69,7 @@
            => this.data
             .Techniques
             .Where(t => t.Id == id)
-            .Select(t => new TechniqueDetailsServiceModel
-            {
-                Id = t.Id,
-                Name = t.Name,
-                //Description = t.Description,
-                Type = t.Type,
-                ImageUrl = t.ImageUrl,
-                ServiceName = t.Service.Name,
-                ManagerId = t.ManagerId,
-                ManagerName = t.Manager.Name,
-                UserId = t.Manager.UserId
-            })
+            .ProjectTo<TechniqueDetailsServiceModel>(this.mapper)
             .FirstOrDefault();
 
         public Guid Create(string name, string type, string imageUrl, Guid serviceId, Guid managerId)
@@ -136,7 +133,7 @@
             .Techniques
             .Any(t => t.Id == serviceId);
 
-        public IEnumerable<TechniqueServiceServiceModel> AllCategories()
+        public IEnumerable<TechniqueServiceServiceModel> AllServices()
             => this.data
                .Services
                .Select(s => new TechniqueServiceServiceModel

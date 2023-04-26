@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tompet.Core.Constants;
+using Tompet.Extensions;
 using Tompet.Infrastructure.Data;
 using Tompet.Infrastructure.Data.Identity;
 using Tompet.ModelBinders;
@@ -83,6 +84,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.PreparateDatabase();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapDefaultAreaRoute();
+    endpoints.MapDefaultControllerRoute();
+    endpoints.MapRazorPages();
+});
 
 app.MapControllerRoute(
     name: "Area",

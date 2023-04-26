@@ -24,6 +24,8 @@
 
         public static IServiceCollection ApplicationServices(this IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Program));
+
             services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IManagerService, ManagerService>();

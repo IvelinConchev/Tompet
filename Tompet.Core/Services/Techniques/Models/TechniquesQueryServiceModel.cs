@@ -1,4 +1,4 @@
-﻿namespace Tompet.Core.Services.Techniques
+﻿namespace Tompet.Core.Services.Techniques.Models
 {
     public class TechniquesQueryServiceModel
     {

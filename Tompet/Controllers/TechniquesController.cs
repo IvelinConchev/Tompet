@@ -1,5 +1,6 @@
 ﻿namespace Tompet.Controllers
 {
+    using AutoMapper;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Tompet.Core.Services.Managers;
@@ -11,13 +12,16 @@
     {
         private readonly ITechniqueService techniques;
         private readonly IManagerService managers;
+        private readonly IMapper mapper;
 
         public TechniquesController(
-            ITechniqueService techniques, 
-            IManagerService managers)
+            ITechniqueService techniques,
+            IManagerService managers, 
+            IMapper mapper)
         {
             this.techniques = techniques;
             this.managers = managers;
+            this.mapper = mapper;
         }
 
         public IActionResult All([FromQuery]
@@ -58,7 +62,7 @@
 
             return View(new TechniqueFormModel
             {
-                Services = this.techniques.AllCategories()
+                Services = this.techniques.AllServices()
             });
         }
 
@@ -80,7 +84,7 @@
 
             if (ModelState.IsValid)
             {
-                technique.Services = this.techniques.AllCategories();
+                technique.Services = this.techniques.AllServices();
 
                 return View(technique);
             }
@@ -88,7 +92,7 @@
             this.techniques.Create(
                 technique.Name,
                 technique.Type,
-                technique.Images,
+                technique.ImageUrl,
                 technique.ServiceId,
                 managerId);
 
@@ -107,20 +111,17 @@
 
             var technique = this.techniques.Details(id);
 
-            if (technique.UserId != userId)
+            if (technique.UserId != userId && !User.IsAdmin())
             {
                 return Unauthorized();
                 //return BadRequest();
             }
 
-            return View(new TechniqueFormModel
-            {
-                Name = technique.Name,
-                Type = technique.Type,
-                Images = technique.ImageUrl,
-                ServiceId = technique.ServiceId,
-                Services = this.techniques.AllCategories()
-            });
+            var techniqueForm = this.mapper.Map<TechniqueFormModel>(technique);
+
+            techniqueForm.Services = this.techniques.AllServices();
+
+            return View(techniqueForm);
         }
 
         [HttpPost]
@@ -129,7 +130,7 @@
         {
             var managerId = this.managers.IdByUser(this.User.Id());
 
-            if (managerId.Equals(Guid.Empty))
+            if (managerId.Equals(Guid.Empty) && !User.IsAdmin())
             {
                 return RedirectToAction(nameof(ManagersContoller.Become), "Managers");
             }
@@ -141,12 +142,12 @@
 
             if (ModelState.IsValid)
             {
-                technique.Services = this.techniques.AllCategories();
+                technique.Services = this.techniques.AllServices();
 
                 return View(technique);
             }
 
-            if (!this.techniques.IsByManager(id, managerId))
+            if (!this.techniques.IsByManager(id, managerId) && !User.IsAdmin())
             {
                 return BadRequest();
             }
@@ -155,7 +156,7 @@
                 id,
                 technique.Name,
                 technique.Type,
-                technique.Images,
+                technique.ImageUrl,
                 technique.ServiceId);
 
 

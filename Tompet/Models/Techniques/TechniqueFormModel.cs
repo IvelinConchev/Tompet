@@ -1,7 +1,7 @@
 ﻿namespace Tompet.Models.Techniques
 {
     using System.ComponentModel.DataAnnotations;
-    using Tompet.Core.Services.Techniques;
+    using Tompet.Core.Services.Techniques.Models;
     using static Tompet.Infrastructure.Data.DataConstants.Technique;
     public class TechniqueFormModel
     {
@@ -16,7 +16,7 @@
         public string Type { get; init; }
 
         [Display(Name = "Снимка")]
-        public string Images { get; init; }
+        public string ImageUrl { get; init; }
 
         [Display(Name = "Услуга")]
         public Guid ServiceId { get; init; }
