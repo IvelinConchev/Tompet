@@ -58,6 +58,8 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Трябва да се попълне!");
 });
 
+builder.Services.AddMemoryCache();
+
 builder.Services.ApplicationServices();
 
 var app = builder.Build();

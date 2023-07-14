@@ -74,5 +74,10 @@
 
             public const string DangerMessageKey = "DangerMessage";
         }
+
+        public class Cache
+        {
+            public const string LatestTechniqueCacheKey = nameof(LatestTechniqueCacheKey);
+        }
     }
 }

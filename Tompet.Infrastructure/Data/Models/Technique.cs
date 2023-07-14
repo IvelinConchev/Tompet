@@ -23,6 +23,8 @@
 
         public string? ImageUrl { get; set; }
 
+        public bool IsPublic { get; set; }
+
         public Guid ServiceId { get; set; }
 
         [ForeignKey(nameof(ServiceId))]

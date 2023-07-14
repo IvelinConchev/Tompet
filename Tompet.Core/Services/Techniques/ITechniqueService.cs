@@ -12,6 +12,7 @@
             int currentPage,
             int techniquesPerPage);
 
+        IEnumerable<LatestTechniqueServiceModel> Latest();
         TechniqueDetailsServiceModel Details(Guid techniqueId);
 
         Guid Create(string name,

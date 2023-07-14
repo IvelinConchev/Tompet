@@ -156,6 +156,20 @@
             })
                 .ToList();
 
-        
+        public IEnumerable<LatestTechniqueServiceModel> Latest()
+        => this.data
+            .Techniques
+            .Where(t => t.IsPublic)
+            .OrderByDescending(s => s.Id)
+            .Select(s => new LatestTechniqueServiceModel
+            {
+                Id = s.Id,
+                ImageUrl = s.ImageUrl,
+                Name = s.Name,
+                Type = s.Type,
+                ServiceName = s.Service.Name
+            })
+            .Take(3)
+            .ToList();
     }
 }
