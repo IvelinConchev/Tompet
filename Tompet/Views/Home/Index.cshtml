@@ -1,9 +1,9 @@
-﻿@model IndexViewModel
+﻿@model List<LatestTechniqueServiceModel>
 @{
     ViewData["Title"] = "Томпет ООД - Tompet LTD";
 }
 
-@if (!Model.Techniques.Any())
+@if (!Model.Any())
 {
     <div class="jumbotron">
         <h1 class="display-4">Добре дошли в сайта на Професионалисти учили във Франция!</h1>
@@ -15,9 +15,9 @@
 
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-        @for (int i = 0; i < Model.Techniques.Count; i++)
+        @for (int i = 0; i < Model.Count; i++)
         {
-            var technique = Model.Techniques[i];
+            var technique = Model[i];
             <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
                 <img src="@technique.ImageUrl" class="d-block w-100" alt="@technique.Name @technique.Type">
                 <div class="carousel-caption d-none d-md-block">

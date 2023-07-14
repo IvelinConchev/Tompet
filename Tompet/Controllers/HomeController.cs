@@ -194,20 +194,17 @@ namespace Tompet.Controllers
     public class HomeController : BaseController
     {
         private readonly ITechniqueService techniques;
-        private readonly IStatisticsService statistics;
         private readonly IConfigurationProvider mapper;
         private readonly TompetDbContext data;
         private readonly IMemoryCache cache;
 
         public HomeController(
             ITechniqueService techniques,
-            IStatisticsService statistics,
             IMapper mapper,
             TompetDbContext data, 
             IMemoryCache cache)
         {
             this.techniques = techniques;
-            this.statistics = statistics;
             this.mapper = mapper.ConfigurationProvider;
             this.data = data;
             this.cache = cache;
@@ -241,7 +238,6 @@ namespace Tompet.Controllers
                 .Take(3)
                 .ToList();
 
-            var totalStatistics = this.statistics.Total();
 
             var latestTechniques = this.cache.Get<List<LatestTechniqueServiceModel>>(LatestTechniqueCacheKey);
 
@@ -273,13 +269,7 @@ namespace Tompet.Controllers
             ViewData[MessageConstant.SuccessMessage] = "Браво, успяхме да подкараме тостера!";
 
 
-            return View(new IndexViewModel
-            {
-                TotalTechniques = totalStatistics.TotalTechniques,
-                TotalUsers = totalStatistics.TotalUsers,
-                Techniques = techniques
-                //Techniques = latestTechniques.ToList()
-            });
+            return View(latestTechniques);
         }
 
         public IActionResult Privacy(ErrorViewModel error)
